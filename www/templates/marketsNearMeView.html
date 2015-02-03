@@ -1,0 +1,13 @@
+<div id="vendorsNearMeView">
+	<div class="padded heading">
+		Markets within 100 miles:
+		<a id="mapButton" class="button right">Map View</a>
+	</div>
+	<div class="data-list">
+		<ul>
+		{{#vendors}}
+		<li index="{{index}}">
+		<strong>{{vendorName}}</strong><div class="subtext">{{distance}} miles </div></li>{{/markets}}
+		</ul>
+	</div>
+</div>
