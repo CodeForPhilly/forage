@@ -44,6 +44,18 @@ angular.module('starter.controllers', [])
   ];
 })
 
+.controller('MapCtrl', function($scope) {
+  $scope.vendors = [
+    { vendor: 'Jerk Chicken Man', id: 1 },
+    { vendor: 'Foo Truck', id: 2 },
+    { vendor: 'Mucho Bueno', id: 3 },
+    { vendor: 'Pitrucco Truck', id: 4 },
+    { vendor: 'Meals on Wheels', id: 5 },
+    { vendor: 'Vege Friendly', id: 6 }
+  ];
+  //Map Init code here
+})
+
 .controller('PlaylistCtrl', function($scope, $stateParams) {
 });
 

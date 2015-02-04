@@ -48,7 +48,7 @@ angular.module('starter', ['ionic', 'starter.controllers'])
     }
   })
 
-   .state('app.vendors', {
+  .state('app.vendors', {
     url: "/vendors",
     views: {
       'menuContent': {
@@ -66,12 +66,12 @@ angular.module('starter', ['ionic', 'starter.controllers'])
       }
     })
 
-  .state('app.single', {
-    url: "/playlists/:playlistId",
+  .state('app.map', {
+    url: "/map",
     views: {
       'menuContent': {
-        templateUrl: "templates/playlist.html",
-        controller: 'PlaylistCtrl'
+        templateUrl: "templates/map.html",
+        controller: 'MapCtrl'
       }
     }
   });
