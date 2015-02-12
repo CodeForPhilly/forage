@@ -45,25 +45,38 @@ angular.module('starter.controllers', [])
 })
 
  // GOOGLE MAPS
-.controller('MapCtrl', function($scope, $ionicLoading) {
+.controller('MapCtrl', function($scope, $ionicLoading, $compile) {
  
   $scope.init = function() {
+        var myLatlng = new google.maps.LatLng(39.952641,-75.164052);
         var mapOptions = {
-          center: { lat: 39.952641, lng: -75.164052},
-          zoom: 12
+          center: myLatlng,
+          zoom: 12,
+          mapTypeId: google.maps.MapTypeId.ROADMAP
         };
         var map = new google.maps.Map(document.getElementById('map-canvas'),
             mapOptions);
       
-    // To add the marker to the map, use the 'map' property
-    var marker = new google.maps.Marker({
-      position: { lat: 39.952641, lng: -75.164052},
-      map: map,
-      title:"Hello World!"
-    });
-      }
-      //google.maps.event.addDomListener(window, 'load', initialize);
-      $scope.centerOnMe = function() {
+   //Marker + infowindow + angularjs compiled ng-click
+  
+        var contentString = "<div><a ng-click='clickTest()'>Click me!</a></div>";
+        var compiled = $compile(contentString)($scope);
+
+        var infowindow = new google.maps.InfoWindow({
+          content: compiled[0]
+        });
+        var marker = new google.maps.Marker({
+        position: { lat: 39.952641, lng: -75.164052},
+        map: map,
+          title: 'Forage Map'
+        });
+        google.maps.event.addListener(marker, 'click', function() {
+          infowindow.open(map,marker);
+        });
+        $scope.map = map;
+    };
+    // google.maps.event.addDomListener(window, 'load', initialize);
+    $scope.centerOnMe = function() {
         if(!$scope.map) {return;}
 
         $scope.loading = $ionicLoading.show({
@@ -82,9 +95,6 @@ angular.module('starter.controllers', [])
         alert('Example of infowindow with ng-click')
     };
 })
-
-.controller('PlaylistCtrl', function($scope, $stateParams) {
-});
 
 
 
