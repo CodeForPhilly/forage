@@ -1,6 +1,6 @@
 angular.module('starter.controllers', [])
 
-.controller('AppCtrl', function($scope, $ionicModal, $timeout) {
+.controller('AppzCtrl', function($scope, $ionicModal, $timeout) {
   // Form data for the login modal
   $scope.loginData = {};
 
@@ -44,19 +44,46 @@ angular.module('starter.controllers', [])
   ];
 })
 
-.controller('MapCtrl', function($scope) {
-  $scope.vendors = [
-    { vendor: 'Jerk Chicken Man', id: 1 },
-    { vendor: 'Foo Truck', id: 2 },
-    { vendor: 'Mucho Bueno', id: 3 },
-    { vendor: 'Pitrucco Truck', id: 4 },
-    { vendor: 'Meals on Wheels', id: 5 },
-    { vendor: 'Vege Friendly', id: 6 }
-  ];
-  //Map Init code here
+.controller('MapCtrl', function($scope, $ionicLoading) {
+ 
+  $scope.init = function() {
+        var mapOptions = {
+          center: { lat: 39.952641, lng: -75.164052},
+          zoom: 12
+        };
+        var map = new google.maps.Map(document.getElementById('map-canvas'),
+            mapOptions);
+      
+    // To add the marker to the map, use the 'map' property
+    var marker = new google.maps.Marker({
+      position: { lat: 39.952641, lng: -75.164052},
+      map: map,
+      title:"Hello World!"
+    });
+      }
+      //google.maps.event.addDomListener(window, 'load', initialize);
+      $scope.centerOnMe = function() {
+        if(!$scope.map) {return;}
+
+        $scope.loading = $ionicLoading.show({
+          content: 'Getting current location...',
+          showBackdrop: false
+        });
+
+        navigator.geolocation.getCurrentPosition(function(pos) {
+          $scope.map.setCenter(new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude));
+          $scope.loading.hide();
+        }, function(error) {
+          alert('Unable to get location: ' + error.message);
+        });
+    };
+    $scope.clickTest = function() {
+        alert('Example of infowindow with ng-click')
+    };
 })
 
 .controller('PlaylistCtrl', function($scope, $stateParams) {
 });
+
 
 
