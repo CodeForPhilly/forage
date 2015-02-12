@@ -44,6 +44,7 @@ angular.module('starter.controllers', [])
   ];
 })
 
+ // GOOGLE MAPS
 .controller('MapCtrl', function($scope, $ionicLoading) {
  
   $scope.init = function() {
