@@ -4,9 +4,9 @@
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
 // 'starter.controllers' is found in controllers.js
-angular.module('starter', ['ionic', 'starter.controllers'])
+var forage = angular.module('starter', ['ionic', 'starter.controllers', 'firebase'])
 
-.run(function($ionicPlatform) {
+forage.run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
     // for form inputs)
@@ -27,7 +27,7 @@ angular.module('starter', ['ionic', 'starter.controllers'])
     url: "/app",
     abstract: true,
     templateUrl: "templates/menu.html",
-    controller: 'AppzCtrl'
+    controller: 'AppCtrl'
   })
 
   .state('app.search', {
@@ -47,21 +47,31 @@ angular.module('starter', ['ionic', 'starter.controllers'])
       }
     }
   })
-
+/*
   .state('app.vendors', {
-    url: "/vendors",
+    url: "/vendorz",
     views: {
       'menuContent': {
         templateUrl: "templates/vendors.html"
       }
     }
-  })
-    .state('app.playlists', {
-      url: "/playlists",
+  })*/
+    .state('app.vendors', {
+      url: "/vendors",
       views: {
         'menuContent': {
-          templateUrl: "templates/playlists.html",
-          controller: 'PlaylistsCtrl'
+          templateUrl: "templates/vendors.html",
+          controller: 'VendorsCtrl'
+        }
+      }
+    })
+
+   .state('login', {
+      url: "/login",
+      views: {
+        'menuContent': {
+          templateUrl: "templates/login.html",
+          controller: 'AppCtrl'
         }
       }
     })
@@ -77,4 +87,37 @@ angular.module('starter', ['ionic', 'starter.controllers'])
   });
   // if none of the above states are matched, use this as the fallback
   $urlRouterProvider.otherwise('/app/vendors');
+});
+
+forage.controller("loginCtrl", function($scope,$rootScope,$firebase, $firebaseSimpleLogin){
+  // Get a reference to the Firebase
+  var firebaseref = new Firebae("https://foragemap.firebaseio.com/");
+
+   // Create a Firebase Simple Login object
+   $scope.auth = $firebaseSimpleLogin(firebaseref);
+
+   // Initially set no user to be logged in
+   $scope.user = null;
+
+   // Logs a user in with inputted provider
+   $scope.login = function(provider) {
+    $scope.auth.$login(provider);
+   };
+
+   $scope.logout = function() {
+    $scope.auth.$logout();
+   };
+    // Upon successful logout, reset the user object
+   $rootScope.$on("$firebaseSimpleLogin:login", function(event, user) {
+    $scope.user = user;
+   });
+    // Upon successful logout, reset user object
+   $rootScope.$on("firebaseSimpleLogin:logout", function(event, user) {
+    $scope.user = null;
+   });
+
+    // Log any log-in related errors to console
+   $rootScope.$on("firebaseSimpleLogin:error", function(event, user) {
+    console.log("Error logging user in: ", error);
+ });
 });

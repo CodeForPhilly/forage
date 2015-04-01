@@ -1,25 +1,20 @@
 <ion-modal-view>
-  <ion-header-bar>
-    <h1 class="title">Login</h1>
-    <div class="buttons">
-      <button class="button button-clear" ng-click="closeLogin()">Close</button>
-    </div>
+<ion-pane>
+  <ion-header-bar class="bar-stable">
+    <h1 class="title">Forage</h1>
   </ion-header-bar>
-  <ion-content>
-    <form ng-submit="doLogin()">
-      <div class="list">
-        <label class="item item-input">
-          <span class="input-label">Username</span>
-          <input type="text" ng-model="loginData.username">
-        </label>
-        <label class="item item-input">
-          <span class="input-label">Password</span>
-          <input type="password" ng-model="loginData.password">
-        </label>
-        <label class="item">
-          <button class="button button-block button-positive" type="submit">Log in</button>
-        </label>
-      </div>
-    </form>
+
+  <ion-content ng-controller="loginCtrl">
+    <!-- Buttons -->
+    <button class="button button-full button-positive login" ng-click="login('facebook')">Login with Facebook</button>
+    <button class="button button-full button-outline button-assertive" ng-click="logout()">Logout</button>
+
+    <!-- Logged-in user text -->
+    <div class="card">
+      <div class="item item-text-wrap" ng-hide="user">User not logged in</div>
+      <div class="item item-text-wrap" ng-show="user" ng-bind="user.uid"></div>
+    </div>
   </ion-content>
+</ion-pane>
+
 </ion-modal-view>

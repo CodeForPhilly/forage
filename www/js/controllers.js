@@ -1,6 +1,6 @@
 angular.module('starter.controllers', [])
 
-.controller('AppzCtrl', function($scope, $ionicModal, $timeout) {
+.controller('AppCtrl', function($scope, $ionicModal, $timeout, $http) {
   // Form data for the login modal
   $scope.loginData = {};
 
@@ -31,16 +31,36 @@ angular.module('starter.controllers', [])
       $scope.closeLogin();
     }, 1000);
   };
+
+
+
+
+
+  //http requests to remote server
+
+  $http.get('http://echo.jsontest.com/conditions/frightful').then(function(resp) {
+    $scope.conditions = resp.data.conditions;
+        //console.log('Success', resp);
+    // For JSON responses, resp.data contains the result
+  }, function(err) {
+    console.error('ERR', err);
+    // err.status will contain the status code
+  })
 })
 
-.controller('PlaylistsCtrl', function($scope) {
+
+
+
+
+
+.controller('VendorsCtrl', function($scope) {
   $scope.vendors = [
-    { vendor: 'Jerk Chicken Man', id: 1 },
+    { vendor: 'Jerk Chicken Man \n + yo', id: 1 },
     { vendor: 'Foo Truck', id: 2 },
     { vendor: 'Mucho Bueno', id: 3 },
     { vendor: 'Pitrucco Truck', id: 4 },
     { vendor: 'Meals on Wheels', id: 5 },
-    { vendor: 'Vege Friendly', id: 6 }
+    { vendor: 'Vege Friendlyfriendly', id: 6 }
   ];
 })
 
@@ -49,11 +69,13 @@ angular.module('starter.controllers', [])
  
   $scope.init = function() {
         var myLatlng = new google.maps.LatLng(39.952641,-75.164052);
+        
         var mapOptions = {
           center: myLatlng,
           zoom: 12,
           mapTypeId: google.maps.MapTypeId.ROADMAP
         };
+
         var map = new google.maps.Map(document.getElementById('map-canvas'),
             mapOptions);
       
@@ -75,26 +97,27 @@ angular.module('starter.controllers', [])
         });
         $scope.map = map;
     };
+
     // google.maps.event.addDomListener(window, 'load', initialize);
-    $scope.centerOnMe = function() {
-        if(!$scope.map) {return;}
 
-        $scope.loading = $ionicLoading.show({
-          content: 'Getting current location...',
-          showBackdrop: false
-        });
+  $scope.centerOnMe= function(){
+  $scope.positions = [];
+    
+    
+    $ionicLoading.show({
+      template: 'Loading...'
+    });
 
-        navigator.geolocation.getCurrentPosition(function(pos) {
-          $scope.map.setCenter(new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude));
-          $scope.loading.hide();
-        }, function(error) {
-          alert('Unable to get location: ' + error.message);
-        });
-    };
-    $scope.clickTest = function() {
-        alert('Example of infowindow with ng-click')
-    };
-})
+
+    navigator.geolocation.getCurrentPosition(function(position) {
+      var pos = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+      $scope.positions.push({lat: pos.k,lng: pos.B});
+      console.log(pos);
+      $scope.map.setCenter(pos);
+      $ionicLoading.hide();
+    });
+  };
+});
 
 
 
