@@ -32,15 +32,21 @@ angular.module('starter.controllers', [])
     }, 1000);
   };
 
-
-
-
+  
 
   //http requests to remote server
 
-  $http.get('http://echo.jsontest.com/conditions/frightful').then(function(resp) {
+  $http.get('https://uforagemap.firebaseio.com/.json').then(function(resp) {
     $scope.conditions = resp.data.conditions;
-        //console.log('Success', resp);
+    _.each(resp.data, function(datum) {
+      new google.maps.Marker({
+        position: datum.l,
+        map: map,
+          title: 'Forage Map'
+        });
+    })
+          //call each response and loop through the data
+        console.log('Success', resp); // console.log('Success', resp.data.Foo_Truck);  
     // For JSON responses, resp.data contains the result
   }, function(err) {
     console.error('ERR', err);
@@ -48,14 +54,9 @@ angular.module('starter.controllers', [])
   })
 })
 
-
-
-
-
-
 .controller('VendorsCtrl', function($scope) {
   $scope.vendors = [
-    { vendor: 'Jerk Chicken Man \n + yo', id: 1 },
+    { vendor: 'Jerk Chicken Man', id: 1 },
     { vendor: 'Foo Truck', id: 2 },
     { vendor: 'Mucho Bueno', id: 3 },
     { vendor: 'Pitrucco Truck', id: 4 },
@@ -65,20 +66,38 @@ angular.module('starter.controllers', [])
 })
 
  // GOOGLE MAPS
-.controller('MapCtrl', function($scope, $ionicLoading, $compile) {
+.controller('MapCtrl', function($scope, $ionicLoading, $compile, $http) {
  
-  $scope.init = function() {
-        var myLatlng = new google.maps.LatLng(39.952641,-75.164052);
-        
-        var mapOptions = {
-          center: myLatlng,
-          zoom: 12,
-          mapTypeId: google.maps.MapTypeId.ROADMAP
-        };
+      $scope.init = function() {
+            var myLatlng = new google.maps.LatLng(39.952641,-75.164052);
+            
+            var mapOptions = {
+              center: myLatlng,
+              zoom: 12,
+              mapTypeId: google.maps.MapTypeId.ROADMAP
+            };
 
-        var map = new google.maps.Map(document.getElementById('map-canvas'),
-            mapOptions);
-      
+            var map = new google.maps.Map(document.getElementById('map-canvas'),
+                mapOptions);
+          
+        $http.get('https://uforagemap.firebaseio.com/.json').then(function(resp) {
+          $scope.conditions = resp.data.conditions;
+            _.each(resp.data, function(datum) {
+              console.log(resp.data)
+          new google.maps.Marker({
+            position: { lat: datum.l[0], lng: datum.l[1]},
+            map: map,
+              title: 'Forage Map'
+          });
+        })
+              //call each response and loop through the data
+            console.log('Success', resp); // console.log('Success', resp.data.Foo_Truck);  
+        // For JSON responses, resp.data contains the result
+      }, function(err) {
+        console.error('ERR', err);
+        // err.status will contain the status code
+      })
+
    //Marker + infowindow + angularjs compiled ng-click
   
         var contentString = "<div><a ng-click='clickTest()'>Click me!</a></div>";
@@ -87,11 +106,15 @@ angular.module('starter.controllers', [])
         var infowindow = new google.maps.InfoWindow({
           content: compiled[0]
         });
+
+
         var marker = new google.maps.Marker({
         position: { lat: 39.952641, lng: -75.164052},
         map: map,
           title: 'Forage Map'
         });
+
+
         google.maps.event.addListener(marker, 'click', function() {
           infowindow.open(map,marker);
         });
