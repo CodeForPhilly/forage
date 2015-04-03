@@ -77,5 +77,86 @@ body {
 
 button.button.button-full.button-positive.login {
     margin-top:44px;
+}
 
+#defaultView {
+    background-image:url('graphics/wheat_bg_nocolor.png');
+    background-position: bottom center;
+    background-repeat:no-repeat;
+}
+
+
+
+@media only screen and (min-width:760px) {
+    #defaultView {
+        background-image:url('graphics/wheat_bg.png');
+    }
+}
+
+#aboutView h2,
+#defaultView h2 {
+    display:block;
+    padding:0em;
+    text-align:center;
+}
+#aboutView div,
+#defaultView div {
+    display:block;
+    padding:1em;
+    padding-top:0em;
+}
+
+#defaultView a {
+    height:100%;
+    display:block;
+    border:1px solid #999;
+    padding:1.25em;
+    text-decoration: none;
+    color:#444;
+    font-size:1em;
+    background:rgba(230,230,230,0.85);
+}
+
+#defaultView a:active {
+    background-color:#D9D900;
+}
+
+#defaultView #nearMe {
+    padding-left:75px;
+    background-image:url('graphics/map_marker.png');
+    background-position: 15px center;
+    background-repeat:no-repeat;
+}
+
+#defaultView #search {
+    padding-left:75px;
+    background-image:url('graphics/search.png');
+    background-position: 5px center;
+    background-repeat:no-repeat;
+}
+
+#defaultView #about {
+    padding-left:75px;
+    background-image:url('graphics/info.png');
+    background-position: 10px center;
+    background-repeat:no-repeat;
+}
+
+
+#findMarketsNearMeView {
+}
+
+#aboutView {
+    padding:1em;
+    padding-top:0em;
+    
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    
+    transform: translate3d(0,0,0);
+    -webkit-transform: translate3d(0,0,0);
+}
+
+#searchView {
+    padding:1.25em;
 }
