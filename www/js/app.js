@@ -4,7 +4,7 @@
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
 // 'starter.controllers' is found in controllers.js
-var forage = angular.module('starter', ['ionic', 'starter.controllers', 'firebase'])
+var forage = angular.module('starter', ['ionic', 'starter.controllers'])
 
 forage.run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
@@ -89,35 +89,13 @@ forage.run(function($ionicPlatform) {
   $urlRouterProvider.otherwise('/app/vendors');
 });
 
-forage.controller("loginCtrl", function($scope,$rootScope,$firebase, $firebaseSimpleLogin){
-  // Get a reference to the Firebase
-  var firebaseref = new Firebae("https://foragemap.firebaseio.com/");
-
-   // Create a Firebase Simple Login object
-   $scope.auth = $firebaseSimpleLogin(firebaseref);
-
-   // Initially set no user to be logged in
-   $scope.user = null;
-
-   // Logs a user in with inputted provider
-   $scope.login = function(provider) {
-    $scope.auth.$login(provider);
-   };
-
-   $scope.logout = function() {
-    $scope.auth.$logout();
-   };
-    // Upon successful logout, reset the user object
-   $rootScope.$on("$firebaseSimpleLogin:login", function(event, user) {
-    $scope.user = user;
-   });
-    // Upon successful logout, reset user object
-   $rootScope.$on("firebaseSimpleLogin:logout", function(event, user) {
-    $scope.user = null;
-   });
-
-    // Log any log-in related errors to console
-   $rootScope.$on("firebaseSimpleLogin:error", function(event, user) {
-    console.log("Error logging user in: ", error);
- });
+var ref = new Firebase('https://social-autho.firebaseio.com/');
+var auth = new FirebaseSimpleLogin(ref, function(error, user) {
+  if (error) {
+    console.log('Authentication error: ', error);
+  } else if (user) {
+    console.log('User ' + user.id + ' authenticated via the ' + user.provider + ' provider!');
+  } else {
+    console.log("User is logged out.")
+  }
 });
