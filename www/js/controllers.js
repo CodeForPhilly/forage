@@ -54,16 +54,7 @@ angular.module('starter.controllers', [])
   })
 })
 
-.controller('VendorsCtrl', function($scope) {
-  $scope.vendors = [
-    { vendor: 'Jerk Chicken Man', id: 1 },
-    { vendor: 'Foo Truck', id: 2 },
-    { vendor: 'Mucho Bueno', id: 3 },
-    { vendor: 'Pitrucco Truck', id: 4 },
-    { vendor: 'Meals on Wheels', id: 5 },
-    { vendor: 'Vege Friendlyfriendly', id: 6 }
-  ];
-})
+
 
  // GOOGLE MAPS
 .controller('MapCtrl', function($scope, $ionicLoading, $compile, $http) {
@@ -82,8 +73,10 @@ angular.module('starter.controllers', [])
           
         $http.get('https://uforagemap.firebaseio.com/.json').then(function(resp) {
           $scope.conditions = resp.data.conditions;
+            // loop through each object in data 
             _.each(resp.data, function(datum) {
               console.log(resp.data)
+            // create marker for each object
           new google.maps.Marker({
             position: { lat: datum.l[0], lng: datum.l[1]},
             map: map,

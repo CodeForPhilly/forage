@@ -20,6 +20,17 @@ forage.run(function($ionicPlatform) {
   });
 })
 
+.controller('VendorsCtrl', function($scope) {
+  $scope.vendors = [
+    { vendor: 'Jerk Chicken Man', id: 1 },
+    { vendor: 'Foo Truck', id: 2 },
+    { vendor: 'Mucho Bueno', id: 3 },
+    { vendor: 'Pitrucco Truck', id: 4 },
+    { vendor: 'Meals on Wheels', id: 5 },
+    { vendor: 'Vege Friendlyfriendly', id: 6 }
+  ];
+})
+
 .config(function($stateProvider, $urlRouterProvider) {
   $stateProvider
 
@@ -47,15 +58,15 @@ forage.run(function($ionicPlatform) {
       }
     }
   })
-/*
-  .state('app.vendors', {
+
+  .state('app.vendorz', {
     url: "/vendorz",
     views: {
       'menuContent': {
-        templateUrl: "templates/vendors.html"
+        templateUrl: "templates/vendorz.html"
       }
     }
-  })*/
+  })
     .state('app.vendors', {
       url: "/vendors",
       views: {
@@ -86,7 +97,7 @@ forage.run(function($ionicPlatform) {
     }
   });
   // if none of the above states are matched, use this as the fallback
-  $urlRouterProvider.otherwise('/app/vendors');
+  $urlRouterProvider.otherwise('/app/vendorz');
 });
 
 var ref = new Firebase('https://social-autho.firebaseio.com/');
