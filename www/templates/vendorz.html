@@ -20,6 +20,33 @@
 
 
 
+    <div id="marketsNearMeView">
+    
+    <div class="padded heading">
+      Markets within 100 miles:
+      <a id="mapButton" class="button right"> Map View</a>
+    </div>
+    
+    <div class="data-list">
+      
+      <ul>
+      {{#}}
+      
+      <li index="{{index}}"><strong>
+      {{marketName}}</strong>
+
+      <div class="subtext">{{distance}} miles</div></li>
+      {{/markets}}
+    </ul>
+  </div>
+
+
+
+    </div>
+
+
+
+
 
     <ion-item class="item item-avatar" "listSelected" href="#">
       <img src="img/jerklogo.png">
