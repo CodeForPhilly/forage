@@ -36,7 +36,7 @@ angular.module('starter.controllers', [])
 
   //http requests to remote server
 
-  $http.get('https://uforagemap.firebaseio.com/.json').then(function(resp) {
+  $http.get('https://foragemap.firebaseio.com/.json').then(function(resp) {
     $scope.conditions = resp.data.conditions;
     _.each(resp.data, function(datum) {
       new google.maps.Marker({
@@ -71,20 +71,20 @@ angular.module('starter.controllers', [])
             var map = new google.maps.Map(document.getElementById('map-canvas'),
                 mapOptions);
           
-        $http.get('https://uforagemap.firebaseio.com/.json').then(function(resp) {
+        $http.get('https://foragemap.firebaseio.com/.json').then(function(resp) {
           $scope.conditions = resp.data.conditions;
             // loop through each object in data 
-            _.each(resp.data, function(datum) {
+            _.each(resp.data, function(data) {
               console.log(resp.data)
             // create marker for each object
           new google.maps.Marker({
-            position: { lat: datum.l[0], lng: datum.l[1]},
+            position: { lat: data.l[0], lng: data.l[1]},
             map: map,
               title: 'Forage Map'
           });
         })
               //call each response and loop through the data
-            console.log('Success', resp); // console.log('Success', resp.data.Foo_Truck);  
+          //  console.log('Success', resp); // console.log('Success', resp.data.Foo_Truck);  
         // For JSON responses, resp.data contains the result
       }, function(err) {
         console.error('ERR', err);
@@ -126,14 +126,42 @@ angular.module('starter.controllers', [])
 
 
     navigator.geolocation.getCurrentPosition(function(position) {
+
+     
+
       var pos = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-      $scope.positions.push({lat: pos.k,lng: pos.B});
+      
+
       console.log(pos);
+     
+      var marker = new google.maps.Marker({
+            
+            map: $scope.map,
+            position: pos,
+            title: 'Forage Map'
+
+      });
+    
+
+      $scope.positions.push({lat: pos.k,lng: pos.B});
+      
       $scope.map.setCenter(pos);
       $ionicLoading.hide();
+    
     });
+
   };
 });
 
+/*var marker = new google.maps.Marker({
+      position: { lat: 39.96, lng: -75.2 }
+      });*/
+
+
+/*new google.maps.Marker({
+            position: { lat: pos.k,lng: pos.B},
+            map: map,
+              title: 'Forage Map'
+      });*/
 
 

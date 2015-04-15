@@ -35,6 +35,57 @@ body {
     font-style:italic;
 }
 
+.subtext {
+    font-size:0.85em;
+    font-color: #888;
+}
+
+.data-list {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    overflow: hidden;
+    position:relative;
+    background-color: #EDEDED;
+    min-height:100%;
+    
+    
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+}
+
+.data-list ul,
+.data-list li {
+    padding:0;
+    margin:0;
+    border:none;
+}
+
+
+.data-list ul {
+    display:block;
+    width:100%;
+    width:100%;
+    max-width:100%;
+}
+
+.data-list li {
+    cursor:pointer;
+    font-size:1em;
+    padding:1em;
+    padding-left:1em;
+    padding-right:1px;
+    display:block;
+    border-top:1px solid #fff;
+    border-bottom:1px solid #CCC;
+    
+    background-image:url('graphics/more_disclosure.png');
+    background-position:right center;
+    background-repeat:no-repeat;
+}
 /*ViewNavigator Styles*/
 
 
@@ -63,6 +114,15 @@ body {
 
 .button:active {
     background-color: #00ccff;
+}
+
+.heading {
+    background-color: #fff;
+    color:#444;
+    border-bottom:1px solid #999;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    -webkit-transform:translate3d(0,0,0);
 }
 
 .scroll {

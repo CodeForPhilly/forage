@@ -100,13 +100,12 @@ forage.run(function($ionicPlatform) {
   $urlRouterProvider.otherwise('/app/vendorz');
 });
 
-var ref = new Firebase('https://social-autho.firebaseio.com/');
-var auth = new FirebaseSimpleLogin(ref, function(error, user) {
+var ref = new Firebase("https://social-autho.firebaseio.com/");
+ref.authWithOAuthPopup("twitter", function(error, authData) {
   if (error) {
-    console.log('Authentication error: ', error);
-  } else if (user) {
-    console.log('User ' + user.id + ' authenticated via the ' + user.provider + ' provider!');
+    console.log("Login Faield!", error);
   } else {
-    console.log("User is logged out.")
+    console.log("Authenticated successfully with payload:", authData);
   }
 });
+
