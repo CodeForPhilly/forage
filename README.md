@@ -9,4 +9,5 @@ Powered by (Ionic Framework)[http://ionicframework.com/] and Firebase
 ssh clone git@github.com:CfABrigadePhiladelphia/forage.git
 
 $ npm install -g cordova ionic
+<br />
 $ ionic serve 
