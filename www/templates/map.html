@@ -1,14 +1,22 @@
-<ion-view view-title="Forage Map" ng-init="init()"> 
+<ion-view view-title="Forage Map"> 
   <ion-content has-header="true" has-footer="true" scroll="false">
     <div id="map-container">
-    <div id="map-canvas"></div>
+        <div id="map-canvas"></div>
     </div>
+
+    <div>
+
+    <div class="location" reverse-geocode ng-transclude/>
+       <p>Address: {{ address }}</p>
+    </div>
+    
     </ion-content>
-    <ion-footer-bar class="bar-dark"> <a ng-click="centerOnMe()" class="button button-icon icon ion-navigate">Center On Me</a></ion-footer-bar>
-  
+    <ion-footer-bar class="bar-dark"> <a ng-click="action.centerOnMe()" class="button button-icon icon ion-navigate">Center On Me</a></ion-footer-bar>
+
+
 </ion-view>
 
-
+    <h1>{{model.coordinates.lat}}</h1>
 
     
 

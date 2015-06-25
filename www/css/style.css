@@ -1,5 +1,9 @@
-
-
+.location {
+    z-index: 999;
+    position: absolute;
+    height: 30px;
+    background: white;
+}
 
 * {
 -webkit-touch-callout: none;
