@@ -17,8 +17,6 @@ app.controller('AppCtrl', function($scope, $ionicModal, $timeout, $http) {
         /**
          * Close Login
          * Triggered in the login modal to close it
-         * 
-         * @return NONE
          */
         closeLogin: function () {
             $scope.modal.hide();
@@ -27,8 +25,6 @@ app.controller('AppCtrl', function($scope, $ionicModal, $timeout, $http) {
         /**
          * Login Function
          * This opens up the modal and shows it
-         * 
-         * @return NONE
          */
         login: function () {
             $scope.modal.show();
@@ -36,7 +32,6 @@ app.controller('AppCtrl', function($scope, $ionicModal, $timeout, $http) {
 
         /**
          * Performs the login action when the user submits the login form
-         * @return NONE
          */
         doLogin: function () {
             console.log('Doing login', $scope.loginData);
@@ -193,8 +188,6 @@ app.controller('MapCtrl', function($scope, $ionicLoading, $compile, $http) {
 app.directive('reverseGeocode', function () {
     return {
         scope: true,
-        restrict: 'A',
-        template: '<div></div>',
         link: function (scope, element, attrs) {
             // Listens for a geolocated event
             scope.$on('map:geolocated', function(event, coords) {
@@ -204,18 +197,22 @@ app.directive('reverseGeocode', function () {
                 geocoder.geocode({ 'latLng': latlng }, function (results, status) {
                     if (status == google.maps.GeocoderStatus.OK) {
                         if (results[1]) {
-                            element.text(results[1].formatted_address);
+                            scope.success = true;
+                            scope.currentAddress = results[1].formatted_address;
                         } else {
-                            element.text('Location not found');
+                            scope.success = false;
+                            scope.failureMsg = 'Location not found';
                         }
                     } else {
-                        element.text('Geocoder failed due to: ' + status);
+                        scope.success = false;
+                        scope.currentAddress = 'Geocoder failed due to: ' + status;
                     }
+
+                    scope.$apply();
                 });
 
             });
         },
-        replace: true
     }
 });
 
