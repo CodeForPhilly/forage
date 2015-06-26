@@ -53,7 +53,7 @@ app.controller('AppCtrl', function($scope, $ionicModal, $timeout, $http) {
         _.each(resp.data, function(datum) {
             new google.maps.Marker({
                 position: datum.l,
-                map: map,
+                map: m.map,
                 title: 'Forage Map'
             });
         })
@@ -77,7 +77,8 @@ app.controller('MapCtrl', function($scope, $ionicLoading, $compile, $http) {
         coordinates: {
             lat: '',
             lng: ''
-        }
+        },
+        map: {}
     }
 
     // Action
@@ -92,7 +93,7 @@ app.controller('MapCtrl', function($scope, $ionicLoading, $compile, $http) {
                 var pos = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
 
                 var marker = new google.maps.Marker({
-                    map: $scope.map,
+                    map: m.map,
                     position: pos,
                     title: 'Forage Map'
                 });
@@ -103,10 +104,10 @@ app.controller('MapCtrl', function($scope, $ionicLoading, $compile, $http) {
                     lng: pos.F
                 };
 
-                // Broadcast map:geolocated event
+                // Broadcast map:geolocated event to reverse geo directive
                 $scope.$broadcast('map:geolocated', m.coordinates);
 
-                $scope.map.setCenter(pos);
+                m.map.setCenter(pos);
                 $ionicLoading.hide();
             });
         },
@@ -115,9 +116,9 @@ app.controller('MapCtrl', function($scope, $ionicLoading, $compile, $http) {
             
             geocoder.geocode( { 'address': address}, function(results, status) {
                 if (status == google.maps.GeocoderStatus.OK) {
-                    $scope.map.setCenter(results[0].geometry.location);
+                    m.map.setCenter(results[0].geometry.location);
                     var marker = new google.maps.Marker({
-                        map: $scope.map,
+                        map: m.map,
                         position: results[0].geometry.location
                     });
                 } else {
@@ -142,7 +143,8 @@ app.controller('MapCtrl', function($scope, $ionicLoading, $compile, $http) {
 
         var map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
 
-        $scope.map = map;
+        // bind 
+        m.map = map;
     };
 
     /**
@@ -150,7 +152,7 @@ app.controller('MapCtrl', function($scope, $ionicLoading, $compile, $http) {
      */
     function buildGmarkers () {
         // Build map prior before building markers
-        if (angular.isUndefined($scope.map)) {
+        if (angular.isUndefined(m.map)) {
             buildGmap();
         }
 
@@ -167,12 +169,12 @@ app.controller('MapCtrl', function($scope, $ionicLoading, $compile, $http) {
                 lat: 39.952641,
                 lng: -75.164052
             },
-            map: $scope.map,
+            map: m.map,
             title: 'Forage Map'
         });
 
         google.maps.event.addListener(marker, 'click', function() {
-            infowindow.open($scope.map, marker);
+            infowindow.open(m.map, marker);
         });
     }
 
@@ -198,7 +200,7 @@ app.controller('MapCtrl', function($scope, $ionicLoading, $compile, $http) {
                             lat: data.l[0],
                             lng: data.l[1]
                         },
-                        map: map,
+                        map: m.map,
                         title: 'Forage Map'
                     });
                 })
@@ -232,6 +234,7 @@ app.directive('reverseGeocode', function () {
 
                 geocoder.geocode({ 'latLng': latlng }, function (results, status) {
                     if (status == google.maps.GeocoderStatus.OK) {
+
                         if (results[1]) {
                             scope.success = true;
                             scope.currentAddress = results[1].formatted_address;
@@ -239,11 +242,11 @@ app.directive('reverseGeocode', function () {
                             scope.success = false;
                             scope.failureMsg = 'Location not found';
                         }
+                        
                     } else {
                         scope.success = false;
                         scope.currentAddress = 'Geocoder failed due to: ' + status;
                     }
-
                     scope.$apply();
                 });
 

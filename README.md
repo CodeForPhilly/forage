@@ -4,10 +4,22 @@ uForage
 Powered by (Ionic Framework)[http://ionicframework.com/] and Firebase
 
 # Get Started
+```bash
+$ git clone git@github.com:CfABrigadePhiladelphia/forage.git
+```
+Clone the repo or fork the repo to submit PRs.
 
+```bash
+$ npm install -g cordova ionic  
+```
+Installs the required cordova and ionic libs.
 
-ssh clone git@github.com:CfABrigadePhiladelphia/forage.git
+```bash
+$ bower install  
+```
+Downloads required bower package dependencies.
 
-$ npm install -g cordova ionic
-<br />
-$ ionic serve 
+```bash
+$ ionic serve  
+```
+Serves up the app into your browser in app format.
