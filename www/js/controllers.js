@@ -73,6 +73,7 @@ app.controller('MapCtrl', function($scope, $ionicLoading, $compile, $http) {
     
     // Model
     var m = $scope.model = {
+        positions: [],
         coordinates: {
             lat: '',
             lng: ''
@@ -82,10 +83,8 @@ app.controller('MapCtrl', function($scope, $ionicLoading, $compile, $http) {
     // Action
     var a = $scope.action = {
         centerOnMe: function () {
-            $scope.positions = [];
-
             $ionicLoading.show({
-                template: 'Loading...'
+                template: 'Finding your location...'
             });
 
             navigator.geolocation.getCurrentPosition(function(position) {
@@ -128,8 +127,11 @@ app.controller('MapCtrl', function($scope, $ionicLoading, $compile, $http) {
         }
     };
 
-    // Initialize on load of controller
-    function init () {
+    /**
+     * Builds the google map and appends to scope.map
+     * @return {Object} Google Map
+     */
+    function buildGmap () {
         var myLatlng = new google.maps.LatLng(39.952641,-75.164052);
         
         var mapOptions = {
@@ -138,9 +140,49 @@ app.controller('MapCtrl', function($scope, $ionicLoading, $compile, $http) {
             mapTypeId: google.maps.MapTypeId.ROADMAP
         };
 
-        var map = new google.maps.Map(document.getElementById('map-canvas'),
-            mapOptions);
+        var map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+
+        $scope.map = map;
+    };
+
+    /**
+     * Builds Google Map Markers
+     */
+    function buildGmarkers () {
+        // Build map prior before building markers
+        if (angular.isUndefined($scope.map)) {
+            buildGmap();
+        }
+
+        //Marker + infowindow + angularjs compiled ng-click
+        var contentString = "<div><a ng-click='clickTest()'>Click me!</a></div>";
+        var compiled = $compile(contentString)($scope);
+
+        var infowindow = new google.maps.InfoWindow({
+            content: compiled[0]
+        });
+        
+        var marker = new google.maps.Marker({
+            position: {
+                lat: 39.952641,
+                lng: -75.164052
+            },
+            map: $scope.map,
+            title: 'Forage Map'
+        });
+
+        google.maps.event.addListener(marker, 'click', function() {
+            infowindow.open($scope.map, marker);
+        });
+    }
+
+    // Initialize on load of controller
+    function init () {
+        
+        buildGmap();
           
+        // TODO
+        // Wrap into a service ... app.factory
         $http.get('https://foragemap.firebaseio.com/.json')
             .then(function(resp) {
                 // If successful 
@@ -167,30 +209,9 @@ app.controller('MapCtrl', function($scope, $ionicLoading, $compile, $http) {
                 console.error('~~~ERROR', err);
                 // err.status will contain the status code
             })
-
-        //Marker + infowindow + angularjs compiled ng-click
-  
-        var contentString = "<div><a ng-click='clickTest()'>Click me!</a></div>";
-        var compiled = $compile(contentString)($scope);
-
-        var infowindow = new google.maps.InfoWindow({
-            content: compiled[0]
-        });
         
-        var marker = new google.maps.Marker({
-            position: {
-                lat: 39.952641,
-                lng: -75.164052
-            },
-            map: map,
-              title: 'Forage Map'
-        });
-
-        google.maps.event.addListener(marker, 'click', function() {
-            infowindow.open(map,marker);
-        });
-
-        $scope.map = map;
+        buildGmarkers();
+        
     };
 
     init();
@@ -230,17 +251,5 @@ app.directive('reverseGeocode', function () {
         },
     }
 });
-
-
-/*var marker = new google.maps.Marker({
-      position: { lat: 39.96, lng: -75.2 }
-      });*/
-
-
-/*new google.maps.Marker({
-            position: { lat: pos.k,lng: pos.B},
-            map: map,
-              title: 'Forage Map'
-      });*/
 
 
