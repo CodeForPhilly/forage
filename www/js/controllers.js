@@ -110,6 +110,21 @@ app.controller('MapCtrl', function($scope, $ionicLoading, $compile, $http) {
                 $scope.map.setCenter(pos);
                 $ionicLoading.hide();
             });
+        },
+        submitForm: function (address) {
+            var geocoder = new google.maps.Geocoder();
+            
+            geocoder.geocode( { 'address': address}, function(results, status) {
+                if (status == google.maps.GeocoderStatus.OK) {
+                    $scope.map.setCenter(results[0].geometry.location);
+                    var marker = new google.maps.Marker({
+                        map: $scope.map,
+                        position: results[0].geometry.location
+                    });
+                } else {
+                    $scope.failureMsg = 'not successful due to ' + status;
+                }
+            });
         }
     };
 
