@@ -1,0 +1,14 @@
+{
+  "generator-mcfly": {
+    "filenameCase": "camel",
+    "filenameSuffix": true,
+    "appname": "forage",
+    "clientFolder": "client",
+    "ionic": true,
+    "famous": false,
+    "ngCordova": true,
+    "fontawesome": true,
+    "bootstrap": false,
+    "material": true
+  }
+}

@@ -1,27 +1,23 @@
 # forage
-uForage
 
-Powered by [AngularJS](http://angularjs.org/), [Ionic Framework](http://ionicframework.com/), and [Firebase](https://www.firebase.com).
+## Usage
 
-# Get Started
-```bash
-$ git clone git@github.com:CfABrigadePhiladelphia/forage.git
-```
-Clone the repo or fork the repo to submit PRs.
 
-```bash
-$ npm install -g cordova ionic  
-```
-Installs the required cordova and ionic packages globally.
+## Testing
 
-```bash
-$ bower install  
-```
-Download the required bower package dependencies to get the app up.
+## Gulp Tasks
 
-```bash
-$ ionic serve  
-```
-Serves up the app into your browser in app format.
+- Run the command gulp lint to lint your files.
+- Run the command gulp browsersync to launch a browsersync server.
+- Run the command gulp browserify to create a browserify bundle.
+- Run the command gulp release to increment version and publish to npm.
+- Run the command gulp changelog to create a CHANGELOG.md file.
+- Run the command gulp test to run the tests.
+- Run the command gulp dist to distribute the application.
+- Run the command gulp style to compile style files.
 
-For more information about available flags and other commands with ionic, click [here](https://www.npmjs.com/package/ionic).
+## Changelog
+
+Recent changes can be viewed on Github on the [Releases Page](https://github.com//forage/releases)
+
+## License
