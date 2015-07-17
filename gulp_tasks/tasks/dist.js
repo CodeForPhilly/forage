@@ -66,6 +66,10 @@ var taskHtml = function(constants) {
         .pipe(rename('config.xml'))
         .pipe(gulp.dest(constants.dist.distFolder));
 
+    gulp.src('./' + constants.clientFolder + '/ionic' + constants.targetSuffix + '.project')
+        .pipe(rename('ionic.project'))
+        .pipe(gulp.dest(constants.dist.distFolder));
+
     gulp.src(constants.cordova.src + '/hooks/**/*.*')
         .pipe(gulp.dest(constants.dist.distFolder + '/hooks'));
 };

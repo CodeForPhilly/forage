@@ -1,20 +1,40 @@
-# forage
+# uForage
+An awesome food app.
 
-## Usage
+## Generator
+https://github.com/mcfly-io/generator-mcfly
 
+## Development
+Install ``` npm install -g generator-mcfly ``` (along with Yeoman if you don't already have it)
 
-## Testing
+Here are some of the Yo commands:
+```
+yo mcfly:module (module)
+yo mcfly:controller (modulename) (controllername)
+yo mcfly:directive (modulename) (directive)
+yo mcfly:service (modulename) (servicename)
+```
+
+For more commands, see:
+https://github.com/mcfly-io/generator-mcfly/blob/master/README.md
 
 ## Gulp Tasks
-
-- Run the command gulp lint to lint your files.
-- Run the command gulp browsersync to launch a browsersync server.
-- Run the command gulp browserify to create a browserify bundle.
-- Run the command gulp release to increment version and publish to npm.
-- Run the command gulp changelog to create a CHANGELOG.md file.
-- Run the command gulp test to run the tests.
-- Run the command gulp dist to distribute the application.
-- Run the command gulp style to compile style files.
+```
+gulp help           # List the main gulp tasks
+gulp lint           # Run lint
+gulp test           # Run lint, unit tests, and e2e tests
+gulp unit           # Run lint and unit tests (karma for client + mocha for server)
+gulp karma          # Run karma client unit tests
+gulp mocha          # Run mocha server unit tests
+gulp e2e            # Run protractor for end to end tests
+gulp browserify     # Generate a distribution folder using browserify
+gulp webpack:run    # Generate a distribution folder using webpack
+gulp style          # Generate a main.css file
+gulp browsersync    # Creates a browser-sync server, it will display its url, it watches for js / css / scss / html file changes and inject automatically the change in the browser
+gulp dist           # Distribute the application
+gulp cordova:image  # Generate the cordova icons and splashs
+gulp cordova:run    # Run cordova run (accepts a --platform option)
+```
 
 ## Changelog
 
