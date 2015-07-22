@@ -14,6 +14,7 @@ require('ionic-angular');
 require('angular-material');
 var app = angular.module(namespace, ['ionic', 'ngMaterial',
     // inject:modules start
+    require('./uforage')(namespace).name
     // inject:modules end
 ]);
 
