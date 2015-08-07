@@ -41,3 +41,12 @@ gulp cordova:run    # Run cordova run (accepts a --platform option)
 Recent changes can be viewed on Github on the [Releases Page](https://github.com//forage/releases)
 
 ## License
+
+
+## Contribute
+Anyone is more then welcome to contribute, we have provided a handful of issues / task to be able to be picked up from anyone at Code for Philly! Make sure to fork off DEV, and then create a Pull Request.
+
+## Slack
+We also communicate through Slack, if you would like to be invited to your channel: https://uforage.slack.com/
+Please post an issue on repo with your gmail, and label it with, Add-Me-To-Slack.
+
